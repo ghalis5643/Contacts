@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".FirstFragmentLogin">
 
     <EditText
         android:id="@+id/editUserName"
@@ -80,6 +80,7 @@
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Confirm Password"
+        android:visibility="gone"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"

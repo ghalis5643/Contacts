@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 import java.util.List;
-
+/* Test push*/
 public class AdapterContact extends RecyclerView.Adapter<AdapterContact.ContactViewHolder>{
     private  List<InfoContact> contactList;
 
