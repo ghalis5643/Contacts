@@ -11,51 +11,38 @@ public class UserLogin implements Parcelable {
     private String username = "";
     private String password = "";
 
-    private  Long id = -1L;
 
 
     private UserLogin(Parcel source){
-        String[] data = new String[5];
+        String[] data = new String[2];
         source.readStringArray(data);
-        setName(data[0]);
-        setPhone(data[1]);
-        setAddress(data[2]);
-        setPhoto(data[3]);
-        setId(Long.parseLong(data[4]));
+        setUserId(data[0]);
+        setUsername(data[1]);
+        setPassword(data[2]);
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-
-
-    public String getPhone() {
-        return phone;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -66,7 +53,7 @@ public class UserLogin implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
-                getName(),getPhone(),getAddress(),getPhoto(), String.valueOf(getId())
+                getUserId(),getUsername(),getPassword()
         });
     }
 

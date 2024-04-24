@@ -73,7 +73,7 @@ public class DAOLogin extends SQLiteOpenHelper {
         getWritableDatabase().update(TABLE, values, "userId=?", idToEdit);
     }
 
-    public void deleteLogin (InfoContact c) {
+    public void deleteLogin (UserLogin c) {
         SQLiteDatabase db = getWritableDatabase();
         String[] userIdToDelete = {c.getUserId().toString()};
         db.delete(TABLE, "userId=?", userIdToDelete);
