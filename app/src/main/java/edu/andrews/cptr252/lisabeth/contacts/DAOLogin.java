@@ -14,6 +14,9 @@ public class DAOLogin extends SQLiteOpenHelper {
     private final String TABLE = "Login";
     private static final String DATABASE = "LoginList";
 
+    private static final String COLUMN_PASSWORD_HASHED = "password_hashed";
+
+
     public DAOLogin(Context context) {
         super(context, DATABASE, null, VERSION);
     }
@@ -23,7 +26,7 @@ public class DAOLogin extends SQLiteOpenHelper {
         String sql = "CREATE TABLE " + TABLE +
                 "( userId INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "username TEXT NOT NULL," +
-                "password TEXT);";
+                "password TEXT NOT NULL);";
         db.execSQL(sql);
     }
 
@@ -33,49 +36,31 @@ public class DAOLogin extends SQLiteOpenHelper {
     }
 
 
+    public void insertLogin (UserLogin userLogin) {
 
-    public List<InfoContact> getList(String order) {
-        List<InfoContact> contacts = new ArrayList<>();
-
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE +
-                " ORDER BY name " + order + ";", null);
-        while (cursor.moveToNext()) {
-            InfoContact c = new InfoContact();
-
-            int userIdIndex = cursor.getColumnIndex("userId");
-            int usernameIndex = cursor.getColumnIndex("username");
-            int passwordIndex = cursor.getColumnIndex("password");
-            c.setName(cursor.getString(userIdIndex));
-            c.setPhone(cursor.getString(usernameIndex));
-            c.setAddress(cursor.getString(passwordIndex));
-
-            contacts.add(c);
-
-        }
-        cursor.close();
-        return contacts;
-    }
-
-    public void insertLogin (InfoContact c) {
+        String hashedPassword = ShaHelper.hash(userLogin.getPassword());
 
         ContentValues values = new ContentValues();
-        values.put("userName", c.getPhone());
-        values.put("password", c.getAddress());
+        values.put("userName", userLogin.getUsername());
+        values.put("password", hashedPassword);
         getWritableDatabase().insert(TABLE, null, values);
     }
-    public void editLogin (InfoContact c) {
-        ContentValues values = new ContentValues();
-        values.put("userId", c.getId());
-        values.put("userName", c.getName());
-        values.put("password", c.getPhone());
+    public void editLogin (UserLogin userLogin) {
 
-        String[] idToEdit = {c.getId().toString()};
+        String hashedPassword = ShaHelper.hash(userLogin.getPassword());
+
+        ContentValues values = new ContentValues();
+        values.put("userId", userLogin.getUserId());
+        values.put("userName", userLogin.getUsername());
+        values.put("password", hashedPassword);
+
+        String[] idToEdit = {userLogin.getUserId().toString()};
         getWritableDatabase().update(TABLE, values, "userId=?", idToEdit);
     }
 
-    public void deleteLogin (UserLogin c) {
+    public void deleteLogin (UserLogin userLogin) {
         SQLiteDatabase db = getWritableDatabase();
-        String[] userIdToDelete = {c.getUserId().toString()};
+        String[] userIdToDelete = {userLogin.getUserId().toString()};
         db.delete(TABLE, "userId=?", userIdToDelete);
     }
 }
