@@ -7,14 +7,13 @@ import androidx.annotation.NonNull;
 
 public class UserLogin implements Parcelable {
     private String userId = "";
-
     private String username = "";
     private String password = "";
 
 
 
     private UserLogin(Parcel source){
-        String[] data = new String[2];
+        String[] data = new String[3];
         source.readStringArray(data);
         setUserId(data[0]);
         setUsername(data[1]);
@@ -65,7 +64,7 @@ public class UserLogin implements Parcelable {
         }
         @Override
         public UserLogin[] newArray(int size){
-            return new UserLogin[0];
+            return new UserLogin[size];
         }
     };
 }

@@ -1,6 +1,6 @@
-package edu.andrews.cptr252.lisabeth.contacts.data;
+package edu.andrews.cptr252.lisabeth.contacts.ui.login.data;
 
-import edu.andrews.cptr252.lisabeth.contacts.data.model.LoggedInUser;
+import edu.andrews.cptr252.lisabeth.contacts.ui.login.data.model.LoggedInUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -23,11 +23,7 @@ public class LoginRepository {
 
     public static LoginRepository getInstance(LoginDataSource dataSource) {
         if (instance == null) {
-            synchronized (LoginRepository.class) {
-                if (instance == null) {
-                    instance = new LoginRepository(dataSource);
-                }
-            }
+            instance = new LoginRepository(dataSource);
         }
         return instance;
     }
@@ -54,19 +50,5 @@ public class LoginRepository {
             setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
         }
         return result;
-    }
-
-
-    public Result<LoggedInUser> register(String username, String password) {
-        // handle login
-        if(dataSource.register(username, password)){
-            Result<LoggedInUser> result = dataSource.login(username, password);
-            if (result instanceof Result.Success) {
-                setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-            }
-            return result;
-        }else{
-            return null;
-        }
     }
 }

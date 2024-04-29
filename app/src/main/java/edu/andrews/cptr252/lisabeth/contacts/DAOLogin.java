@@ -2,31 +2,39 @@ package edu.andrews.cptr252.lisabeth.contacts;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 public class DAOLogin extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private final String TABLE = "Login";
     private static final String DATABASE = "LoginList";
 
-    private static final String COLUMN_PASSWORD_HASHED = "password_hashed";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_PASSWORD = "password";
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public DAOLogin(@Nullable Context context, @Nullable String name, int version, @NonNull SQLiteDatabase.OpenParams openParams) {
+        super(context, name, version, openParams);
+    }
 
     public DAOLogin(Context context) {
         super(context, DATABASE, null, VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " + TABLE +
-                "( userId INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "username TEXT NOT NULL," +
-                "password TEXT NOT NULL);";
+        String sql = "CREATE TABLE " + TABLE + "(" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_USERNAME + " TEXT NOT NULL," +
+                COLUMN_PASSWORD + " TEXT NOT NULL);";
         db.execSQL(sql);
     }
 
